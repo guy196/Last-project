@@ -12,6 +12,8 @@ public class gunscript : MonoBehaviour
 
     private int currentAmmo;
 
+    public int range = 100;
+
     public float reloadTime = 30f;
 
     private bool isReloding = false;    
@@ -60,9 +62,6 @@ public class gunscript : MonoBehaviour
 
         currentAmmo = maxammo;
         isReloding = false;
-
-
-
     }
 
     void shoot()
@@ -71,7 +70,7 @@ public class gunscript : MonoBehaviour
         mazlleflush.Play();
 
         currentAmmo--;
-        if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit))
+        if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit, range))
         {
             Debug.Log(hit.transform.name);
             Enemy enemy = hit.transform.GetComponent<Enemy>();
@@ -80,5 +79,11 @@ public class gunscript : MonoBehaviour
                 enemy.TakeDamege(20);
             }            
         }
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(fpscam.transform.position, range);
     }
 }
