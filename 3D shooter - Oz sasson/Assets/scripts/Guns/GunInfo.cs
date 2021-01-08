@@ -1,13 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class mouselook : MonoBehaviour
+[CreateAssetMenu(menuName = "Fps/New Gun")]
+public class GunInfo : ItemInfo
 {
 
-
-    public void Update()
-    {
-
-    }
 }

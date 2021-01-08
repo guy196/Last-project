@@ -6,7 +6,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 	[SerializeField] GameObject cameraholder;
+
 	[SerializeField] float mouseSensetivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
+
+	[SerializeField] Item[] items;
+
+	int itemIndex;
+	int previousIndex = -1;
 
 	float verticalLookRtotation;
 	bool grounded;
@@ -26,10 +32,13 @@ public class PlayerController : MonoBehaviour
 
 	private void Start()
 	{
-		if (!PV.IsMine)
+		if (PV.IsMine)
 		{
-			Destroy(GetComponentInChildren<Camera>().gameObject);
+			Equiped(0);
 		}
+		else
+			Destroy(GetComponentInChildren<Camera>().gameObject);
+			Destroy(rb);
 	}
 	private void Update()
 	{
@@ -39,6 +48,14 @@ public class PlayerController : MonoBehaviour
 		Move();
 		Jump();
 
+		for (int i = 0; i < items.Length; i++)
+		{
+			if(Input.GetKeyDown((i + 1).ToString())) //check the nums at the key(0,1,2,3,4,5,6) for example if i = 0 so it checks if we press one
+			{
+				Equiped(i);
+				break;//if we pressed one it is set active the 0 in the arrays 
+			}
+		}
 	}
 
 	void Move()
@@ -74,7 +91,23 @@ public class PlayerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
+		if (!PV.IsMine)
+			return;
 		rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
+	}
+
+	void Equiped(int _index)
+	{
+		if (_index == previousIndex)
+			return;
+			_index = itemIndex;
+		items[itemIndex].itemGameobject.SetActive(true); //sets the item we equiped to the number at the array we want for example Equiped(0)
+		if (previousIndex != -1) //caled every time we swutch weapons and turn off the last weapon we used exept the first time because previousIndex == 0
+		{
+			items[previousIndex].itemGameobject.SetActive(false);
+		}
+
+		previousIndex = itemIndex;
 	}
 
 }
