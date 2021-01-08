@@ -16,6 +16,7 @@ public class Luncher : MonoBehaviourPunCallbacks
     [SerializeField] GameObject roomlistItemPrefab;
     [SerializeField] GameObject PlayerlistItemPrefab;
     [SerializeField] Transform PlayerlistContent;
+    [SerializeField] GameObject startgamebutton;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -33,6 +34,7 @@ public class Luncher : MonoBehaviourPunCallbacks
         Debug.Log("connected to Master");
 
         PhotonNetwork.JoinLobby(); // we have to join lobby before we create or join a room
+        PhotonNetwork.AutomaticallySyncScene = true; // to syncScenes between player
     }
 
     public override void OnJoinedLobby()
@@ -54,16 +56,27 @@ public class Luncher : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
         MenuManager.Instance.OpenMenu("room");
         Player[] players = PhotonNetwork.PlayerList;
 
+        foreach (Transform child in PlayerlistContent)
+        {
+            Destroy(child.gameObject);
+        }
+
         for (int i = 0; i < players.Count(); i++)
         {
             Instantiate(PlayerlistItemPrefab, PlayerlistContent).GetComponent<PlayerListItem>().SetUp(players[i]);
-        }   
+        }
+        startgamebutton.SetActive(PhotonNetwork.IsMasterClient);
     }
 
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        startgamebutton.SetActive(PhotonNetwork.IsMasterClient);
+    }
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         errorText.text = "room creation Failed" + message;
@@ -95,6 +108,8 @@ public class Luncher : MonoBehaviourPunCallbacks
         }
         for (int i = 0; i < roomList.Count; i++)
         {
+            if (roomList[i].RemovedFromList)
+                continue;
             Instantiate(roomlistItemPrefab, roomlistContent).GetComponent<roomlistItem>().Setup(roomList[i]);
         }
     }
@@ -102,5 +117,9 @@ public class Luncher : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Instantiate(PlayerlistItemPrefab, PlayerlistContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
+    }
+    public void startGame()
+    {
+        PhotonNetwork.LoadLevel(1);
     }
 }

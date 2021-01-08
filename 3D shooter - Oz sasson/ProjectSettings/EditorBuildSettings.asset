@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Multiplayer_Menu.unity
     guid: 2d976ae2df702b44a8e9320f11de0298
+  - enabled: 1
+    path: Assets/Scenes/Creative mode.unity
+    guid: 7860c958f56277c4aaa18732a8b210ff
   m_configObjects: {}
