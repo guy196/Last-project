@@ -21,7 +21,7 @@ public class movement : MonoBehaviour
     Vector3 velocity;
 
     public float jumpHight = 1f;
-    void Update()
+    public void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         if (isGrounded && velocity.y < 0)

@@ -20,18 +20,18 @@ public class gunscript : MonoBehaviour
     public ParticleSystem mazlleflush;
 
     public Animator animator;
-    void Start()
+    public void Start()
     {
         currentAmmo = maxammo;
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         isReloding = false;
         animator.SetBool("realoding", false);
     }
 
-    void Update()
+    public void Update()
     {
         if (isReloding)
             return;
@@ -63,14 +63,15 @@ public class gunscript : MonoBehaviour
         currentAmmo = maxammo;
         isReloding = false;
     }
+    Vector3 offset = new Vector3(0, -3, 3);
 
-    void shoot()
+    public void shoot()
     {
         RaycastHit hit;
         mazlleflush.Play();
 
         currentAmmo--;
-        if (Physics.Raycast(fpscam.transform.position, fpscam.transform.forward, out hit, range))
+        if (Physics.Raycast(fpscam.transform.position + offset, fpscam.transform.forward, out hit, range))
         {
             Debug.Log(hit.transform.name);
             Enemy enemy = hit.transform.GetComponent<Enemy>();
@@ -81,9 +82,9 @@ public class gunscript : MonoBehaviour
         }
     }
 
-    void OnDrawGizmos()
+    public void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(fpscam.transform.position, range);
+        Gizmos.DrawWireSphere(transform.position + offset, range);
     }
 }
