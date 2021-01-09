@@ -1,9 +1,10 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
-public class PlayerController : MonoBehaviourPunCallbacks
+public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 {
 	[SerializeField] GameObject cameraholder;
 
@@ -11,8 +12,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
 	[SerializeField] Item[] items;
 
-	public int itemIndex;
-	int previousIndex = -1;
+	int itemIndex;
+	int previousItemIndex = -1;
 
 	float verticalLookRtotation;
 	bool grounded;
@@ -23,18 +24,25 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
 	Rigidbody rb;
 
+	const float maxhealth = 100f;
+
+	float currentHealth = maxhealth;
+
+	PlayerManager playerManager;
 	private void Awake()
 	{
 		rb = GetComponent<Rigidbody>();
 		PV = GetComponent<PhotonView>();
 		Cursor.lockState = CursorLockMode.Locked;
+
+		playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>(); //finds the player manager script 
 	}
 
 	private void Start()
 	{
 		if (PV.IsMine)
 		{
-			Equiped(0);
+			EquipItem(0);
 		}
 		else
 		{
@@ -53,34 +61,36 @@ public class PlayerController : MonoBehaviourPunCallbacks
 		{
 			if(Input.GetKeyDown((i + 1).ToString())) //check the nums at the key(0,1,2,3,4,5,6) for example if i = 0 so it checks if we press one
 			{
-				Equiped(i);
+				EquipItem(i);
 				break;//if we pressed one it is set active the 0 in the arrays 
 			}
 
-			if(Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
+			if (Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
 			{
-				if(itemIndex >= items.Length -1)
+				if (itemIndex >= items.Length - 1)
 				{
-					Equiped(0);
+					EquipItem(0);
 				}
 				else
 				{
-					Equiped(itemIndex + 1);
+					EquipItem(itemIndex + 1);
 				}
-
 			}
-			else if(Input.GetAxisRaw("Mouse ScrollWheel") < 0f)
+			else if (Input.GetAxisRaw("Mouse ScrollWheel") < 0f)
 			{
-				if(itemIndex <= 0)
+				if (itemIndex <= 0)
 				{
-					Equiped(items.Length - 1);
+					EquipItem(items.Length - 1);
 				}
 				else
 				{
-					Equiped(itemIndex - 1);
-	
+					EquipItem(itemIndex - 1);
 				}
 			}
+		}
+		if (Input.GetMouseButtonDown(0))
+		{
+			items[itemIndex].Use();
 		}
 	}
 
@@ -122,21 +132,21 @@ public class PlayerController : MonoBehaviourPunCallbacks
 		rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
 	}
 
-	void Equiped(int _index)
+	void EquipItem(int _index)
 	{
-		if (_index == previousIndex)
-			return;	
+		if (_index == previousItemIndex)
+			return;
 
 		itemIndex = _index;
 
-		items[itemIndex].itemGameobject.SetActive(true); //sets the item we equiped to the number at the array we want for example Equiped(0)
+		items[itemIndex].itemGameobject.SetActive(true);
 
-		if (previousIndex != -1) //caled every time we swutch weapons and turn off the last weapon we used exept the first time because previousIndex == 0
+		if (previousItemIndex != -1)
 		{
-			items[previousIndex].itemGameobject.SetActive(false);
+			items[previousItemIndex].itemGameobject.SetActive(false);
 		}
 
-		previousIndex = itemIndex;
+		previousItemIndex = itemIndex;
 
 		if (PV.IsMine)
 		{
@@ -146,4 +156,35 @@ public class PlayerController : MonoBehaviourPunCallbacks
 		}
 	}
 
+	public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps) //When there is a change and the information about this change has recived
+	{
+		if(!PV.IsMine && targetPlayer == PV.Owner) // we do not want to sycnic the informatiom for ourself so we checking if pv is not mine
+		{
+			EquipItem((int)changedProps["itemIndex"]); //we passing the index to the other players
+		}
+	}
+
+	public void TakeDamagee(float damage)
+	{
+		PV.RPC("RPC_TakeDamage", RpcTarget.All, damage); //runs on the shooter's computer
+	}
+
+	[PunRPC]
+	void RPC_TakeDamage(float damage) //runs only on the victon computer
+	{
+		if (!PV.IsMine)
+			return;
+		Debug.Log("took damage:" + damage);
+
+		currentHealth -= damage;
+
+		if(currentHealth <= 0)
+		{
+			Die();
+		}
+	}
+	void Die()
+	{
+		playerManager.Die();
+	}
 }

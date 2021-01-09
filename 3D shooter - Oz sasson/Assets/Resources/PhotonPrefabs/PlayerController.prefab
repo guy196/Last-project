@@ -275,9 +275,8 @@ MonoBehaviour:
   jumpForce: 300
   smoothTime: 0.15
   items:
-  - {fileID: 4149035154089854942}
-  - {fileID: 7312809371230527137}
-  itemIndex: 0
+  - {fileID: 7345000006323444750}
+  - {fileID: 9189543959861250740}
 --- !u!54 &5832430310859135935
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1546,9 +1545,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6735474336752255010}
-  - component: {fileID: 7312809371230527137}
+  - component: {fileID: 9189543959861250740}
   m_Layer: 0
-  m_Name: Gun2ITem
+  m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1569,7 +1568,7 @@ Transform:
   m_Father: {fileID: 6532919945503304655}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &7312809371230527137
+--- !u!114 &9189543959861250740
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1578,11 +1577,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7944339762992701621}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 919ad56c227b62c40bba2afdf3419142, type: 3}
+  m_Script: {fileID: 11500000, guid: 13845f91cb41ff74d953dd11bec46ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ItemInfo: {fileID: 11400000, guid: b4290232d47a5c94499e7b7985d4e68c, type: 2}
   itemGameobject: {fileID: 389046216061961406}
+  cam: {fileID: 4362161978849606024}
 --- !u!1 &8091825612726654374
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,9 +1592,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6558562831668085287}
-  - component: {fileID: 4149035154089854942}
+  - component: {fileID: 7345000006323444750}
   m_Layer: 0
-  m_Name: Gun1ITem
+  m_Name: Ak
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1615,7 +1615,7 @@ Transform:
   m_Father: {fileID: 6532919945503304655}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4149035154089854942
+--- !u!114 &7345000006323444750
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1624,11 +1624,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8091825612726654374}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 919ad56c227b62c40bba2afdf3419142, type: 3}
+  m_Script: {fileID: 11500000, guid: 13845f91cb41ff74d953dd11bec46ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ItemInfo: {fileID: 11400000, guid: 92ba0031a43295646b6a917b739697c1, type: 2}
   itemGameobject: {fileID: 6349797401680292079}
+  cam: {fileID: 4362161978849606024}
 --- !u!1 &8174368880715577855
 GameObject:
   m_ObjectHideFlags: 0
