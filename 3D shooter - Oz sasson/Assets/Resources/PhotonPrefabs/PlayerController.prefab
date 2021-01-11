@@ -277,6 +277,13 @@ MonoBehaviour:
   items:
   - {fileID: 7345000006323444750}
   - {fileID: 9189543959861250740}
+  playercontroller: {fileID: 1552376203854059922}
+  cam: {fileID: 2892047372705577341}
+  script: {fileID: 0}
+  wallTime: 1
+  SecondsLeft: 10
+  distance: 2
+  wall: {fileID: 7433592729109026597, guid: 9ee5fcf7e81c59e41b428aeba51bfaad, type: 3}
 --- !u!54 &5832430310859135935
 Rigidbody:
   m_ObjectHideFlags: 0

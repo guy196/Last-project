@@ -2,15 +2,31 @@
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 {
 	[SerializeField] GameObject cameraholder;
 
+
 	[SerializeField] float mouseSensetivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
 
 	[SerializeField] Item[] items;
+
+	[SerializeField] GameObject playercontroller;
+
+	[SerializeField] GameObject cam;
+
+	[SerializeField] SuperPowers script;
+
+	//public TMP_Text Walltimer;
+
+	public bool wallTime = true;
+
+	public float SecondsLeft = 10f;
+
+	public int distance = 4;
 
 	int itemIndex;
 	int previousItemIndex = -1;
@@ -29,13 +45,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 	float currentHealth = maxhealth;
 
 	PlayerManager playerManager;
+
+	public GameObject wall;
+
+	public GameObject iconwall;
 	private void Awake()
 	{
 		rb = GetComponent<Rigidbody>();
 		PV = GetComponent<PhotonView>();
 		Cursor.lockState = CursorLockMode.Locked;
 
-		playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>(); //finds the player manager script 
+		playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>(); //finds the player manager script	
 	}
 
 	private void Start()
@@ -52,11 +72,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 	}
 	private void Update()
 	{
+		//Walltimer.GetComponent<TMP_Text>().text = "00:";
+		if (wallTime == true)
+		{
+
+		}
+
 		if (!PV.IsMine)
 			return;
 		Look();
 		Move();
 		Jump();
+		Wall();
 		for (int i = 0; i < items.Length; i++)
 		{
 			if(Input.GetKeyDown((i + 1).ToString())) //check the nums at the key(0,1,2,3,4,5,6) for example if i = 0 so it checks if we press one
@@ -187,4 +214,21 @@ public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 	{
 		playerManager.Die();
 	}
+	void Wall()
+	{
+		if (Input.GetKeyDown(KeyCode.E) && wallTime == true)
+		{
+			Debug.Log("test");
+			Instantiate(wall, cam.transform.position + transform.forward * distance, cam.transform.rotation);
+			wallTime = false;
+			StartCoroutine(TimerTake());
+		}
+	}
+
+	public IEnumerator TimerTake()
+	{
+		yield return new WaitForSeconds(3);
+		wallTime = true;
+	}
+
 }
