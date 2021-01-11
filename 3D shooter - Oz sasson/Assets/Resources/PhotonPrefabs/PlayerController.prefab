@@ -272,14 +272,13 @@ MonoBehaviour:
   mouseSensetivity: 3
   sprintSpeed: 6
   walkSpeed: 3
-  jumpForce: 300
+  jumpForce: 400
   smoothTime: 0.15
   items:
   - {fileID: 7345000006323444750}
   - {fileID: 9189543959861250740}
   playercontroller: {fileID: 1552376203854059922}
   cam: {fileID: 2892047372705577341}
-  script: {fileID: 0}
   wallTime: 1
   SecondsLeft: 10
   distance: 2

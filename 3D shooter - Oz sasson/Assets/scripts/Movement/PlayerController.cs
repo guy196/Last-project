@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 
 	[SerializeField] GameObject cam;
 
-	[SerializeField] SuperPowers script;
 
 	//public TMP_Text Walltimer;
 
@@ -48,7 +47,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 
 	public GameObject wall;
 
-	public GameObject iconwall;
 	private void Awake()
 	{
 		rb = GetComponent<Rigidbody>();
