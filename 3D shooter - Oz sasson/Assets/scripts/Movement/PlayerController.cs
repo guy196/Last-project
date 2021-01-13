@@ -2,7 +2,6 @@
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using TMPro;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
@@ -215,15 +214,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 	}
 	void Wall()
 	{
-		if (Input.GetKeyDown(KeyCode.T) && wallTime == true)
+		if (Input.GetKeyDown(KeyCode.E) && wallTime == true)
 		{
 			Debug.Log("test");
-			PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Wall"), cam.transform.position + transform.forward * distance, Quaternion.identity);
+			Instantiate(wall, cam.transform.position + transform.forward * distance, cam.transform.rotation);
 			wallTime = false;
 			StartCoroutine(TimerTake());
 		}
 	}
-
 
 	public IEnumerator TimerTake()
 	{
