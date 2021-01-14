@@ -9,8 +9,15 @@ public class RefManager : MonoBehaviour
 
     public TMP_Text healthTextRef;
 
+    public GameObject wallicon;
+
+    public GameObject particlesystem;
+
+
     private void Awake()
     {
         Instance = this;
+        DontDestroyOnLoad(Instance);
     }
+    
 }

@@ -222,6 +222,7 @@ MonoBehaviour:
   playercontroller: {fileID: 900342574884172195}
   cam: {fileID: 5524421601844855234}
   textHealthBar: {fileID: 0}
+  wallicon: {fileID: 0}
   wallTime: 1
   SecondsLeft: 10
   distance: 2
@@ -971,6 +972,7 @@ MonoBehaviour:
   ItemInfo: {fileID: 11400000, guid: b4290232d47a5c94499e7b7985d4e68c, type: 2}
   itemGameobject: {fileID: 3861047388962508389}
   cam: {fileID: 5499011095108258349}
+  particle: {fileID: 0}
 --- !u!1 &4464884248219674854
 GameObject:
   m_ObjectHideFlags: 0
@@ -1888,6 +1890,7 @@ MonoBehaviour:
   ItemInfo: {fileID: 11400000, guid: 92ba0031a43295646b6a917b739697c1, type: 2}
   itemGameobject: {fileID: 4464884248219674854}
   cam: {fileID: 5499011095108258349}
+  particle: {fileID: 0}
 --- !u!1 &9174109678652788695
 GameObject:
   m_ObjectHideFlags: 0

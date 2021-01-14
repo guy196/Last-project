@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 
 	[SerializeField] TMP_Text textHealthBar;
 
+	[SerializeField] GameObject wallicon;
+
 	//public TMP_Text Walltimer;
 
 	public bool wallTime = true;
@@ -61,6 +63,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 	private void Start()
 	{
 		textHealthBar = RefManager.Instance.healthTextRef;
+		wallicon = RefManager.Instance.wallicon;
 
 		if (PV.IsMine)
 		{
@@ -76,8 +79,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 	{
 		if (wallTime == true)
 		{
-
+			wallicon.GetComponent<Image>().color = Color.cyan;
 		}
+		else
+			wallicon.GetComponent<Image>().color = Color.white;
+
 
 		if (!PV.IsMine)
 			return;
@@ -216,12 +222,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 	{
 		playerManager.Die();
 	}
+	Vector3 move = new Vector3(0,-1,0);
 	void Wall()
 	{
 		if (Input.GetKeyDown(KeyCode.E) && wallTime == true)
-		{
+		{	
 			Debug.Log("test");
-			Instantiate(wall, cam.transform.position + transform.forward * distance, cam.transform.rotation);
+			Instantiate(wall, cam.transform.position + move + transform.forward * distance, cam.transform.rotation);
 			wallTime = false;
 			StartCoroutine(TimerTake());
 		}

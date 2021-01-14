@@ -122,4 +122,9 @@ public class Luncher : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LoadLevel(1);
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
