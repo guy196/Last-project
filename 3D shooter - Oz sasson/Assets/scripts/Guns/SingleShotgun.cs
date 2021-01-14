@@ -17,7 +17,7 @@ public class SingleShotgun : Gun
 		ray.origin = cam.transform.position;
 		if(Physics.Raycast(ray, out RaycastHit hit))
 		{
-			hit.collider.gameObject.GetComponent<Idamageable>()?.TakeDamagee(((GunInfo)ItemInfo).damage); // we are looking for the function Take damage, if we found it we are taking the damage from the singleton that built in every weapon
+			hit.collider.gameObject.GetComponent<Idamageable>()?.TakeDamagee(((GunInfo)ItemInfo).damage); // we are looking for the callback idmahable and for the function function Take damage, if we found it we are taking the damage from the singleton that built in every weapon
 		}
 	}
 }

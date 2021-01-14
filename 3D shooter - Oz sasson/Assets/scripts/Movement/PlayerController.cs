@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 {
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 
 	[SerializeField] GameObject cam;
 
+	[SerializeField] TMP_Text textHealthBar;
 
 	//public TMP_Text Walltimer;
 
@@ -58,6 +60,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 
 	private void Start()
 	{
+		textHealthBar = RefManager.Instance.healthTextRef;
+
 		if (PV.IsMine)
 		{
 			EquipItem(0);
@@ -70,7 +74,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 	}
 	private void Update()
 	{
-		//Walltimer.GetComponent<TMP_Text>().text = "00:";
 		if (wallTime == true)
 		{
 
@@ -117,6 +120,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 		{
 			items[itemIndex].Use();
 		}
+		textHealthBar.text = currentHealth.ToString();
 	}
 
 	void Move()
