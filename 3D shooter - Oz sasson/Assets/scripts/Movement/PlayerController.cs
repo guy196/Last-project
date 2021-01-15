@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, Idamageable
 
 		if (PV.IsMine)
 		{
-			EquipItem(Random.Range(0, 1));
+			EquipItem(0);
 		}
 		else
 		{
