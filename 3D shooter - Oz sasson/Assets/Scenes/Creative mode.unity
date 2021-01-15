@@ -891,7 +891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthTextRef: {fileID: 689278249}
   wallicon: {fileID: 1567816861}
-  particlesystem: {fileID: 0}
+  particlesystem: {fileID: 4034003360631126375, guid: 7a49c75c5915bbf4e9bdd49bfdf4c58c, type: 3}
 --- !u!4 &395599957
 Transform:
   m_ObjectHideFlags: 0

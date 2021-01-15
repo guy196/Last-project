@@ -25,7 +25,9 @@ public class SingleShotgun : Gun
 
 			Vector3 position = new Vector3(hit.collider.transform.position.x, hit.collider.transform.position.y, hit.collider.transform.position.z);
 			// we are looking for the callback idmahable and for the function function Take damage, if we found it we are taking the damage from the singleton that built in every weapon
-			Instantiate(particle, position, Quaternion.identity);
+			GameObject particleInstantiate = Instantiate(particle, position, Quaternion.identity);
+			new WaitForSeconds(2);
+			Destroy(particleInstantiate);
 		}
 	}
 }
